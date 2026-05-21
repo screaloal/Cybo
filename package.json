@@ -5,12 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build --webpack",
-    "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
-    "vercel-build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
