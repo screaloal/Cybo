@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma db push && prisma generate && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",
