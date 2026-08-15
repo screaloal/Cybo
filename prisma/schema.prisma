@@ -6,14 +6,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Strict user roles to prevent unauthorized access escalations
 enum Role {
   USER
   VIP
   SUPERUSER
 }
 
-// Account status tracking for security monitoring and bot defense
 enum Status {
   ACTIVE
   SUSPENDED
@@ -21,25 +19,19 @@ enum Status {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  username      String   @unique
-  passwordHash  String   // Encrypted password hash (Never store raw text!)
-  
-  // Tiered authorization roles
-  role          Role     @default(USER)
-  status        Status   @default(PENDING_VERIFICATION)
-  
-  // Security log metadata
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  lastLoginAt   DateTime?
-  failedLoginAttempts Int  @default(0) // Tracks brute-force bot attacks
-  
-  // Profile Information
-  displayName   String?
-  bio           String?
-  avatarUrl     String?
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  username            String    @unique
+  passwordHash        String
+  role                Role      @default(USER)
+  status              Status    @default(PENDING_VERIFICATION)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  lastLoginAt         DateTime?
+  failedLoginAttempts Int       @default(0)
+  displayName         String?
+  bio                 String?
+  avatarUrl           String?
 
-  @@index([email, username]) // Speed up lookups for secure authentication
+  @@index([email, username])
 }
