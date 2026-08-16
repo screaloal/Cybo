@@ -10,7 +10,7 @@
     "migrate": "prisma db push"
   },
   "dependencies": {
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^5.22.0",
     "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^3.0.3",
     "dotenv": "^16.0.0",
@@ -25,7 +25,7 @@
     "@types/react": "^19.2.15",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.15",
-    "prisma": "^7.8.0",
+    "prisma": "^5.22.0",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
   }
