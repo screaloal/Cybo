@@ -11,7 +11,6 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
     document.body.style.background = '#000';
-    document.body.style.margin = '0';
     document.documentElement.style.background = '#000';
   }, []);
 
@@ -59,7 +58,7 @@ export default function Home() {
           color: #f0f6ff; font-size: 15px; font-weight: 500;
           text-decoration: none; letter-spacing: 0.04em;
           animation: glowPulse 3s ease-in-out infinite;
-          transition: all 0.3s; margin-bottom: 18px;
+          transition: all 0.3s;
           font-family: 'DM Sans', sans-serif;
         }
         .login-link:hover { border-color: rgba(96,165,250,0.65); transform: translateY(-1px); }
@@ -118,19 +117,8 @@ export default function Home() {
           Where Secure Minds Meet
         </p>
 
-        {/* Login */}
+        {/* Login only */}
         <Link href="/auth" className="login-link">Login</Link>
-
-        {/* Register */}
-        <Link href="/auth" style={{
-          fontSize: 13,
-          color: 'rgba(240,246,255,0.28)',
-          textDecoration: 'none',
-          letterSpacing: '0.02em',
-          transition: 'color 0.3s',
-        }}>
-          Create new account →
-        </Link>
 
       </div>
 
