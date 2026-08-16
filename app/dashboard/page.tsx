@@ -1,120 +1,113 @@
 'use client';
 
-import React from 'react';
-import { useTheme } from '@/context/ThemeContext';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-export default function DashboardPage() {
-  const { theme } = useTheme();
+export default function Dashboard() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
-  // Mock telemetry data for our cybersecurity dashboard metrics
-  const systemMetrics = [
-    { label: 'Active Proxies', value: '14 / 15', status: 'Optimal', color: 'text-emerald-500' },
-    { label: 'Database Integrity', value: '99.98%', status: 'Secured', color: 'text-emerald-500' },
-    { label: 'Intercepted Threats', value: '1,248', status: 'Mitigated', color: 'text-amber-500' },
-    { label: 'System Load', value: '24.2%', status: 'Nominal', color: 'text-emerald-500' },
-  ];
+  useEffect(() => {
+    document.body.style.background = '#000';
+    document.documentElement.style.background = '#000';
+    setLoading(false);
+  }, []);
 
-  const recentLogs = [
-    { time: '21:44:12', event: 'SSH handshake initialized successfully via Termux Client', type: 'SYSTEM' },
-    { time: '21:37:51', event: 'Git repository baseline pushed to origin main remote archive', type: 'DEVOPS' },
-    { time: '17:51:03', event: 'Webpack compilation completed successfully - Status 200 OK', type: 'COMPILER' },
-    { time: '17:42:31', event: 'Turbopack platform binding bypass activated (--webpack)', type: 'PATCH' },
-  ];
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/');
+  };
+
+  if (loading) return (
+    <div style={{ background: '#000', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ color: 'rgba(240,246,255,0.3)', fontSize: 13, letterSpacing: '0.1em' }}>Loading...</div>
+    </div>
+  );
 
   return (
-    <main className="min-h-screen p-4 md:p-8 transition-colors duration-200 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-      
-      {/* Top Header / Navigation Bar Container */}
-      <header className="flex flex-col md:flex-row md:items-center md:justify-between pb-6 mb-8 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div className="flex items-center space-x-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <h1 className="text-2xl font-mono font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              DR-SCREAL // Core Central
-            </h1>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-mono">
-            Node: android-arm64_termux_v16 // Active Session
-          </p>
-        </div>
-        
-        <div className="mt-4 md:mt-0 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold text-center">
-          Security Cleared: Level 4 Admin
-        </div>
-      </header>
+    <div style={{
+      background: '#000',
+      minHeight: '100vh',
+      color: '#f0f6ff',
+      fontFamily: "'DM Sans', sans-serif",
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 24,
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap');
+        html, body { background: #000 !important; margin: 0 !important; }
+      `}</style>
 
-      {/* Grid Layout Row 1: System Telemetry Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {systemMetrics.map((metric, index) => (
-          <div 
-            key={index} 
-            className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-slate-800 dark:bg-slate-900/30 backdrop-blur-sm"
-          >
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-              {metric.label}
-            </p>
-            <p className="text-3xl font-mono font-bold tracking-tight my-2">
-              {metric.value}
-            </p>
-            <div className="flex items-center space-x-1.5 text-xs font-mono">
-              <span className={`font-semibold ${metric.color}`}>● {metric.status}</span>
-            </div>
-          </div>
-        ))}
-      </section>
+      <div style={{
+        background: 'rgba(255,255,255,0.03)',
+        border: '1px solid rgba(96,165,250,0.12)',
+        borderRadius: 20,
+        padding: '48px 40px',
+        maxWidth: 400,
+        width: '100%',
+        textAlign: 'center',
+      }}>
+        <div style={{
+          width: 48, height: 48,
+          background: 'rgba(96,165,250,0.08)',
+          border: '1px solid rgba(96,165,250,0.2)',
+          borderRadius: 12,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 24px',
+          fontSize: 20,
+        }}>🛡️</div>
 
-      {/* Grid Layout Row 2: Live Activity Feed & Operational Control Split */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Left Column: Live Terminal Log Console Stream (Spans 2 columns) */}
-        <div className="lg:col-span-2 p-6 rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/30 backdrop-blur-sm flex flex-col">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4 font-mono">
-            &gt;_ System Activity Log Stream
-          </h3>
-          <div className="flex-1 min-h-[240px] rounded-xl bg-slate-900 text-slate-200 p-4 font-mono text-xs space-y-3 border border-slate-800 overflow-x-auto shadow-inner">
-            {recentLogs.map((log, index) => (
-              <div key={index} className="flex items-start space-x-2 leading-relaxed">
-                <span className="text-emerald-500 shrink-0">[{log.time}]</span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400 shrink-0 uppercase tracking-wide">
-                  {log.type}
-                </span>
-                <span className="text-slate-300">{log.event}</span>
-              </div>
-            ))}
-            <div className="text-emerald-400/70 animate-pulse text-[11px] pt-1">
-              &gt; Listening for incoming telemetry signals...
-            </div>
-          </div>
+        <h1 style={{
+          fontFamily: "'Syne', sans-serif",
+          fontSize: 24, fontWeight: 800,
+          marginBottom: 8, letterSpacing: '-0.02em',
+        }}>Welcome to CyberNet</h1>
+
+        <p style={{
+          fontSize: 13, color: 'rgba(240,246,255,0.35)',
+          marginBottom: 40, lineHeight: 1.7, fontWeight: 300,
+        }}>
+          Your dashboard is being built. More features coming in V2.
+        </p>
+
+        <div style={{
+          display: 'flex', flexDirection: 'column', gap: 12,
+        }}>
+          <Link href="/" style={{
+            padding: '13px 24px',
+            background: 'transparent',
+            border: '1px solid rgba(96,165,250,0.3)',
+            borderRadius: 10,
+            color: '#f0f6ff',
+            textDecoration: 'none',
+            fontSize: 14,
+            letterSpacing: '0.02em',
+            transition: 'all 0.2s',
+          }}>← Back to Home</Link>
+
+          <button onClick={handleLogout} style={{
+            padding: '13px 24px',
+            background: 'transparent',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: 10,
+            color: 'rgba(240,246,255,0.35)',
+            fontSize: 14,
+            cursor: 'pointer',
+            letterSpacing: '0.02em',
+            fontFamily: "'DM Sans', sans-serif",
+          }}>Logout</button>
         </div>
+      </div>
 
-        {/* Right Column: Platform Utility Directives */}
-        <div className="p-6 rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/30 backdrop-blur-sm">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4">
-            Operational Directives
-          </h3>
-          <div className="space-y-3">
-            <button className="w-full text-left px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between group">
-              <span className="text-sm font-medium font-mono text-slate-700 dark:text-slate-300 group-hover:text-emerald-500 transition-colors">
-                Run Network Audit
-              </span>
-              <span className="text-xs font-mono text-slate-400 group-hover:text-emerald-400">&rarr;</span>
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between group">
-              <span className="text-sm font-medium font-mono text-slate-700 dark:text-slate-300 group-hover:text-emerald-500 transition-colors">
-                Sync Vault Archives
-              </span>
-              <span className="text-xs font-mono text-slate-400 group-hover:text-emerald-400">&rarr;</span>
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center justify-between group">
-              <span className="text-sm font-medium font-mono text-slate-700 dark:text-slate-300 group-hover:text-emerald-500 transition-colors">
-                Purge Temporary Cache
-              </span>
-              <span className="text-xs font-mono text-slate-400 group-hover:text-emerald-400">&rarr;</span>
-            </button>
-          </div>
-        </div>
-
-      </section>
-    </main>
+      <div style={{
+        position: 'fixed', bottom: 20,
+        fontSize: 11, color: 'rgba(240,246,255,0.12)',
+        letterSpacing: '0.03em',
+      }}>© 2026 CyberNet</div>
+    </div>
   );
 }
