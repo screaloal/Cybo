@@ -1,3 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #000 !important;
+  color: #f0f6ff !important;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}

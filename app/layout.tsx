@@ -1,23 +1,16 @@
-import type { Metadata } from "next";
-import { ThemeProvider } from "@/context/ThemeContext";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "DR-SCREAL Core Gate",
-  description: "Secure telemetry and cryptographic control interface",
+  title: 'CyberNet',
+  description: 'Where Secure Minds Meet',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body style={{ background: '#000', minHeight: '100vh' }}>
+        {children}
       </body>
     </html>
   );
