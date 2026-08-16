@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" fill="none">
+  <!-- Shield outline -->
+  <path d="M100 8L20 40v60c0 52 35 98 80 112 45-14 80-60 80-112V40L100 8z"
+    stroke="rgba(96,165,250,0.7)" stroke-width="1.5"
+    fill="rgba(10,20,50,0.4)"/>
+
+  <!-- CN watermark -->
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle"
+    font-family="serif" font-size="72" font-weight="700" letter-spacing="4"
+    fill="rgba(96,165,250,0.06)">CN</text>
+
+  <!-- Circuit lines -->
+  <line x1="100" y1="40" x2="100" y2="160" stroke="rgba(96,165,250,0.12)" stroke-width="0.8"/>
+  <line x1="50" y1="90" x2="150" y2="90" stroke="rgba(96,165,250,0.12)" stroke-width="0.8"/>
+  <line x1="65" y1="60" x2="100" y2="90" stroke="rgba(96,165,250,0.08)" stroke-width="0.8"/>
+  <line x1="135" y1="60" x2="100" y2="90" stroke="rgba(96,165,250,0.08)" stroke-width="0.8"/>
+  <line x1="55" y1="120" x2="100" y2="90" stroke="rgba(96,165,250,0.08)" stroke-width="0.8"/>
+  <line x1="145" y1="120" x2="100" y2="90" stroke="rgba(96,165,250,0.08)" stroke-width="0.8"/>
+
+  <!-- Circuit dots -->
+  <circle cx="100" cy="40" r="2" fill="rgba(96,165,250,0.25)"/>
+  <circle cx="50" cy="90" r="2" fill="rgba(96,165,250,0.25)"/>
+  <circle cx="150" cy="90" r="2" fill="rgba(96,165,250,0.25)"/>
+  <circle cx="65" cy="60" r="1.5" fill="rgba(96,165,250,0.2)"/>
+  <circle cx="135" cy="60" r="1.5" fill="rgba(96,165,250,0.2)"/>
+  <circle cx="55" cy="120" r="1.5" fill="rgba(96,165,250,0.2)"/>
+  <circle cx="145" cy="120" r="1.5" fill="rgba(96,165,250,0.2)"/>
+  <circle cx="100" cy="160" r="2" fill="rgba(96,165,250,0.25)"/>
+
+  <!-- Padlock body -->
+  <rect x="84" y="97" width="32" height="26" rx="4"
+    stroke="rgba(96,165,250,0.55)" stroke-width="1.2" fill="rgba(10,20,50,0.6)"/>
+
+  <!-- Padlock shackle -->
+  <path d="M91 97V88a9 9 0 0 1 18 0v9"
+    stroke="rgba(96,165,250,0.55)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+  <!-- Keyhole -->
+  <circle cx="100" cy="108" r="3.5" stroke="rgba(96,165,250,0.4)" stroke-width="1" fill="none"/>
+  <line x1="100" y1="111" x2="100" y2="117" stroke="rgba(96,165,250,0.4)" stroke-width="1" stroke-linecap="round"/>
+</svg>
