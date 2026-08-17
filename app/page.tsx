@@ -102,7 +102,7 @@ export default function Home() {
           marginBottom: 10,
           textAlign: 'center',
         }}>
-          Cyber<span style={{ color: 'rgba(96,165,250,0.85)' }}>Net</span>
+          Cybo<span style={{ color: 'rgba(96,165,250,0.85)' }}>eta</span>
         </h1>
 
         {/* Tagline */}

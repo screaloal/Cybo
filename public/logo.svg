@@ -1,40 +1,82 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
   <defs>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <!-- Vertical line -->
-  <line x1="100" y1="8" x2="100" y2="192" stroke="rgba(96,165,250,0.35)" stroke-width="0.8"/>
+  <!-- Vertical line full -->
+  <line x1="100" y1="4" x2="100" y2="196" stroke="rgba(96,165,250,0.2)" stroke-width="0.6"/>
 
-  <!-- Horizontal line -->
-  <line x1="8" y1="100" x2="192" y2="100" stroke="rgba(96,165,250,0.35)" stroke-width="0.8"/>
+  <!-- Horizontal line full -->
+  <line x1="4" y1="100" x2="196" y2="100" stroke="rgba(96,165,250,0.2)" stroke-width="0.6"/>
 
-  <!-- Top arrow -->
-  <polyline points="88,30 100,14 112,30" stroke="rgba(96,165,250,0.6)" stroke-width="1" fill="none" stroke-linejoin="round"/>
-  <polyline points="92,38 100,24 108,38" stroke="rgba(96,165,250,0.3)" stroke-width="0.8" fill="none" stroke-linejoin="round"/>
+  <!-- Top arrow outer -->
+  <polyline points="86,36 100,12 114,36"
+    stroke="rgba(96,165,250,0.7)" stroke-width="1.4"
+    fill="none" stroke-linejoin="miter"
+    filter="url(#softglow)"/>
 
-  <!-- Bottom arrow -->
-  <polyline points="88,170 100,186 112,170" stroke="rgba(96,165,250,0.6)" stroke-width="1" fill="none" stroke-linejoin="round"/>
-  <polyline points="92,162 100,176 108,162" stroke="rgba(96,165,250,0.3)" stroke-width="0.8" fill="none" stroke-linejoin="round"/>
+  <!-- Top arrow inner -->
+  <polyline points="91,42 100,22 109,42"
+    stroke="rgba(96,165,250,0.35)" stroke-width="0.8"
+    fill="none" stroke-linejoin="miter"/>
 
-  <!-- Corner dots -->
-  <circle cx="8" cy="100" r="1.5" fill="rgba(96,165,250,0.7)"/>
-  <circle cx="192" cy="100" r="1.5" fill="rgba(96,165,250,0.7)"/>
-  <circle cx="100" cy="8" r="1.5" fill="rgba(96,165,250,0.7)"/>
-  <circle cx="100" cy="192" r="1.5" fill="rgba(96,165,250,0.7)"/>
+  <!-- Bottom arrow outer -->
+  <polyline points="86,164 100,188 114,164"
+    stroke="rgba(96,165,250,0.7)" stroke-width="1.4"
+    fill="none" stroke-linejoin="miter"
+    filter="url(#softglow)"/>
 
-  <!-- Outer C ring -->
-  <path d="M148,72 A56,56 0 1,0 148,128" stroke="rgba(96,165,250,0.55)" stroke-width="1.8" filter="url(#glow)"/>
+  <!-- Bottom arrow inner -->
+  <polyline points="91,158 100,178 109,158"
+    stroke="rgba(96,165,250,0.35)" stroke-width="0.8"
+    fill="none" stroke-linejoin="miter"/>
 
-  <!-- Inner C -->
-  <path d="M132,82 A34,34 0 1,0 132,118" stroke="rgba(96,165,250,0.4)" stroke-width="1.4"/>
+  <!-- End dots -->
+  <circle cx="4" cy="100" r="2" fill="rgba(96,165,250,0.8)" filter="url(#softglow)"/>
+  <circle cx="196" cy="100" r="2" fill="rgba(96,165,250,0.8)" filter="url(#softglow)"/>
+  <circle cx="100" cy="4" r="2" fill="rgba(96,165,250,0.8)" filter="url(#softglow)"/>
+  <circle cx="100" cy="196" r="2" fill="rgba(96,165,250,0.8)" filter="url(#softglow)"/>
 
-  <!-- E crossbars -->
-  <line x1="66" y1="100" x2="130" y2="100" stroke="rgba(96,165,250,0.55)" stroke-width="1.6" filter="url(#glow)"/>
-  <line x1="66" y1="82" x2="110" y2="82" stroke="rgba(96,165,250,0.4)" stroke-width="1.2"/>
-  <line x1="66" y1="118" x2="110" y2="118" stroke="rgba(96,165,250,0.4)" stroke-width="1.2"/>
-  <line x1="66" y1="82" x2="66" y2="118" stroke="rgba(96,165,250,0.4)" stroke-width="1.2"/>
+  <!-- Outer C arc — large, bold -->
+  <path d="M152,65 A60,60 0 1,0 152,135"
+    stroke="rgba(96,165,250,0.75)" stroke-width="2.5"
+    stroke-linecap="round"
+    filter="url(#glow)"/>
+
+  <!-- Inner C arc -->
+  <path d="M136,78 A38,38 0 1,0 136,122"
+    stroke="rgba(96,165,250,0.45)" stroke-width="1.6"
+    stroke-linecap="round"
+    filter="url(#softglow)"/>
+
+  <!-- E vertical bar -->
+  <line x1="62" y1="76" x2="62" y2="124"
+    stroke="rgba(96,165,250,0.75)" stroke-width="2.5"
+    stroke-linecap="round"
+    filter="url(#softglow)"/>
+
+  <!-- E top bar -->
+  <line x1="62" y1="76" x2="118" y2="76"
+    stroke="rgba(96,165,250,0.75)" stroke-width="2.5"
+    stroke-linecap="round"
+    filter="url(#softglow)"/>
+
+  <!-- E middle bar — full width through center -->
+  <line x1="62" y1="100" x2="136" y2="100"
+    stroke="rgba(96,165,250,0.85)" stroke-width="2.5"
+    stroke-linecap="round"
+    filter="url(#glow)"/>
+
+  <!-- E bottom bar -->
+  <line x1="62" y1="124" x2="118" y2="124"
+    stroke="rgba(96,165,250,0.75)" stroke-width="2.5"
+    stroke-linecap="round"
+    filter="url(#softglow)"/>
 </svg>
