@@ -7,17 +7,14 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith('/dashboard')) {
-    if (!token) return NextResponse.redirect(new URL('/auth', req.url));
-    try { await jwtVerify(token, secret()); }
-    catch { return NextResponse.redirect(new URL('/auth', req.url)); }
+  if (pathname === '/auth') {
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
-  if (pathname === '/auth' && token) {
-    try {
-      await jwtVerify(token, secret());
-      return NextResponse.redirect(new URL('/dashboard', req.url));
-    } catch {}
+  if (pathname.startsWith('/dashboard')) {
+    if (!token) return NextResponse.redirect(new URL('/', req.url));
+    try { await jwtVerify(token, secret()); }
+    catch { return NextResponse.redirect(new URL('/', req.url)); }
   }
 
   return NextResponse.next();
