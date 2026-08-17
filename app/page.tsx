@@ -136,13 +136,13 @@ export default function Home() {
 
         .input-field{
           width:100%;padding:13px 16px 13px 40px;
-          background:rgba(255,255,255,0.03);
-          border:1px solid rgba(255,255,255,0.07);
+          background:rgba(255,255,255,0.05);
+          border:1px solid rgba(255,255,255,0.1);
           border-radius:10px;color:#f0f6ff;
           font-family:'DM Sans',sans-serif;font-size:14px;outline:none;
           transition:border-color 0.25s,box-shadow 0.25s,background 0.25s;
         }
-        .input-field::placeholder{color:rgba(240,246,255,0.2)}
+        .input-field::placeholder{color:rgba(240,246,255,0.38)}
         .input-field:focus{
           border-color:rgba(96,165,250,0.4);
           background:rgba(255,255,255,0.05);
@@ -203,7 +203,7 @@ export default function Home() {
 
         .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn 0.3s ease}
         .modal-box{background:#060a14;border:1px solid rgba(96,165,250,0.1);border-radius:20px;padding:40px 32px;max-width:390px;width:100%;animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1)}
-        .close-btn{width:100%;padding:13px;background:transparent;border:1px solid rgba(255,255,255,0.07);border-radius:10px;color:rgba(240,246,255,0.3);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;letter-spacing:0.04em}
+        .close-btn{width:100%;padding:13px;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(240,246,255,0.3);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;letter-spacing:0.04em}
         .close-btn:hover{border-color:rgba(255,255,255,0.14);color:rgba(240,246,255,0.6)}
 
         .input-wrap{position:relative;width:100%}
@@ -251,14 +251,14 @@ export default function Home() {
               <span className="input-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
               </span>
-              <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="input-field" autoComplete="email"/>
+              <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="input-field" autoComplete="off"/>
             </div>
 
             <div className="input-wrap">
               <span className="input-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </span>
-              <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="input-field" autoComplete="current-password"
+              <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="input-field" autoComplete="off"
                 onKeyDown={e => e.key === 'Enter' && handleAuth()}/>
               <button className="eye-btn" type="button" onClick={() => setShowPassword(!showPassword)}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -301,7 +301,7 @@ export default function Home() {
               <span className="input-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 7l10 7 10-7"/></svg>
               </span>
-              <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="input-field" autoComplete="email"/>
+              <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="input-field" autoComplete="off"/>
             </div>
 
             <div className="input-wrap">
