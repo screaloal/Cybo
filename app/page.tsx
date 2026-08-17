@@ -30,26 +30,14 @@ export default function Home() {
     }}>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap');
         html, body { background: #000 !important; margin: 0 !important; padding: 0 !important; }
-        @keyframes floatPill { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
-        @keyframes breathe { 0%,100%{filter:drop-shadow(0 0 8px rgba(37,99,235,0.3))} 50%{filter:drop-shadow(0 0 22px rgba(37,99,235,0.5))} }
-        @keyframes glowPulse { 0%,100%{box-shadow:0 0 16px rgba(96,165,250,0.12)} 50%{box-shadow:0 0 28px rgba(96,165,250,0.22)} }
+        @keyframes breathe { 0%,100%{filter:drop-shadow(0 0 8px rgba(96,165,250,0.15))} 50%{filter:drop-shadow(0 0 22px rgba(96,165,250,0.3))} }
+        @keyframes glowPulse { 0%,100%{box-shadow:0 0 16px rgba(96,165,250,0.1)} 50%{box-shadow:0 0 28px rgba(96,165,250,0.2)} }
         @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes drift { 0%{transform:translateY(100vh);opacity:0} 10%{opacity:0.4} 90%{opacity:0.1} 100%{transform:translateY(-10vh);opacity:0} }
+        @keyframes drift { 0%{transform:translateY(100vh);opacity:0} 10%{opacity:0.3} 90%{opacity:0.1} 100%{transform:translateY(-10vh);opacity:0} }
+        @keyframes floatPill { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
         @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        .learn-pill {
-          position: fixed; top: 28px; left: 50%; transform: translateX(-50%);
-          padding: 10px 22px; background: transparent;
-          border: 1px solid rgba(96,165,250,0.3); border-radius: 100px;
-          color: rgba(240,246,255,0.6); font-size: 13px; font-weight: 500;
-          cursor: pointer; letter-spacing: 0.04em; white-space: nowrap;
-          animation: floatPill 4s ease-in-out infinite;
-          box-shadow: 0 0 14px rgba(96,165,250,0.08);
-          transition: all 0.3s; z-index: 10;
-          font-family: 'DM Sans', sans-serif;
-        }
-        .learn-pill:hover { border-color: rgba(96,165,250,0.6); color: #f0f6ff; box-shadow: 0 0 24px rgba(96,165,250,0.18); }
         .logo-wrap { animation: breathe 4s ease-in-out infinite; }
         .login-link {
           display: inline-flex; align-items: center; justify-content: center;
@@ -58,12 +46,26 @@ export default function Home() {
           color: #f0f6ff; font-size: 15px; font-weight: 500;
           text-decoration: none; letter-spacing: 0.04em;
           animation: glowPulse 3s ease-in-out infinite;
-          transition: all 0.3s;
-          font-family: 'DM Sans', sans-serif;
+          transition: all 0.3s; width: 100%; max-width: 320px;
+          font-family: 'DM Sans', sans-serif; text-align: center;
         }
         .login-link:hover { border-color: rgba(96,165,250,0.65); transform: translateY(-1px); }
-        .content-wrap { animation: fadeIn 1s ease 0.3s both; display: flex; flex-direction: column; align-items: center; }
-        .particle { position: fixed; width: 1px; height: 1px; background: rgba(96,165,250,0.5); border-radius: 50%; animation: drift linear infinite; pointer-events: none; }
+        .content-wrap { animation: fadeIn 1s ease 0.3s both; display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 24px; }
+        .particle { position: fixed; width: 1px; height: 1px; background: rgba(96,165,250,0.4); border-radius: 50%; animation: drift linear infinite; pointer-events: none; }
+        .about-btn {
+          background: transparent;
+          border: 1px solid rgba(96,165,250,0.25);
+          border-radius: 100px;
+          color: rgba(240,246,255,0.4);
+          font-size: 12px; font-weight: 500;
+          cursor: pointer; letter-spacing: 0.04em;
+          padding: 9px 20px;
+          transition: all 0.3s;
+          font-family: 'DM Sans', sans-serif;
+          animation: floatPill 4s ease-in-out infinite;
+          margin-top: 20px;
+        }
+        .about-btn:hover { border-color: rgba(96,165,250,0.5); color: rgba(240,246,255,0.7); }
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 24px; animation: fadeIn 0.3s ease; }
         .modal-box { background: #080d1a; border: 1px solid rgba(96,165,250,0.12); border-radius: 20px; padding: 40px 36px; max-width: 400px; width: 100%; animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1); }
         .close-btn { width: 100%; padding: 13px; background: transparent; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; color: rgba(240,246,255,0.35); font-size: 13px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em; }
@@ -79,46 +81,45 @@ export default function Home() {
         }} />
       ))}
 
-      {/* About pill */}
-      <button className="learn-pill" onClick={() => setShowModal(true)}>
-        About Cyboeta
-      </button>
-
-      {/* Main */}
+      {/* Main Content */}
       <div className="content-wrap">
 
-        {/* Logo */}
-        <div className="logo-wrap" style={{ width: 280, height: 280, position: 'relative', marginBottom: 32 }}>
-          <Image src="/logo.webp" alt="Cyboeta Shield" fill style={{ objectFit: 'contain' }} priority />
+        {/* Logo — large, center stage */}
+        <div className="logo-wrap" style={{
+          width: 320, height: 320,
+          position: 'relative',
+          marginBottom: 48,
+        }}>
+          <Image
+            src="/logo.webp"
+            alt="Cyboeta"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
         </div>
 
-        {/* Name */}
-        <h1 style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: 'clamp(34px,7vw,54px)',
-          fontWeight: 800,
-          letterSpacing: '-0.02em',
-          color: '#f0f6ff',
-          marginBottom: 10,
-          textAlign: 'center',
-        }}>
-          Cybo<span style={{ color: 'rgba(96,165,250,0.85)' }}>eta</span>
-        </h1>
+        {/* Login */}
+        <Link href="/auth" className="login-link">
+          Login
+        </Link>
 
-        {/* Tagline */}
-        <p style={{
-          fontSize: 12,
-          color: 'rgba(240,246,255,0.28)',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          marginBottom: 52,
-          fontWeight: 300,
+        {/* Register */}
+        <Link href="/auth" style={{
+          fontSize: 13,
+          color: 'rgba(240,246,255,0.25)',
+          textDecoration: 'none',
+          letterSpacing: '0.02em',
+          marginTop: 16,
+          transition: 'color 0.3s',
         }}>
-          Where Secure Minds Meet
-        </p>
+          Create new account →
+        </Link>
 
-        {/* Login only */}
-        <Link href="/auth" className="login-link">Login</Link>
+        {/* About pill — below login */}
+        <button className="about-btn" onClick={() => setShowModal(true)}>
+          About Cyboeta
+        </button>
 
       </div>
 
@@ -129,10 +130,10 @@ export default function Home() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         zIndex: 1,
       }}>
-        <span style={{ fontSize: 11, color: 'rgba(240,246,255,0.15)', letterSpacing: '0.03em' }}>© 2026 Cyboeta</span>
+        <span style={{ fontSize: 11, color: 'rgba(240,246,255,0.12)', letterSpacing: '0.03em' }}>© 2026 Cyboeta</span>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Privacy', 'Terms', 'About'].map(l => (
-            <a key={l} href="#" style={{ fontSize: 11, color: 'rgba(240,246,255,0.15)', textDecoration: 'none', letterSpacing: '0.03em' }}>{l}</a>
+            <a key={l} href="#" style={{ fontSize: 11, color: 'rgba(240,246,255,0.12)', textDecoration: 'none', letterSpacing: '0.03em' }}>{l}</a>
           ))}
         </div>
       </div>
@@ -141,7 +142,7 @@ export default function Home() {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 6, color: '#f0f6ff' }}>What is Cyboeta?</div>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 6, color: '#f0f6ff' }}>What is Cyboeta?</div>
             <div style={{ fontSize: 11, color: 'rgba(240,246,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 24 }}>Version 1.0</div>
             <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', marginBottom: 22 }} />
             <p style={{ fontSize: 14, color: 'rgba(240,246,255,0.45)', lineHeight: 1.8, marginBottom: 24, fontWeight: 300 }}>
