@@ -65,7 +65,7 @@ export default function Dashboard() {
           fontFamily: "'Syne', sans-serif",
           fontSize: 24, fontWeight: 800,
           marginBottom: 8, letterSpacing: '-0.02em',
-        }}>Welcome to CyberNet</h1>
+        }}>Welcome to Cyboeta</h1>
 
         <p style={{
           fontSize: 13, color: 'rgba(240,246,255,0.35)',
@@ -107,7 +107,7 @@ export default function Dashboard() {
         position: 'fixed', bottom: 20,
         fontSize: 11, color: 'rgba(240,246,255,0.12)',
         letterSpacing: '0.03em',
-      }}>© 2026 CyberNet</div>
+      }}>© 2026 Cyboeta</div>
     </div>
   );
 }

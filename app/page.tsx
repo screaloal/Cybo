@@ -81,7 +81,7 @@ export default function Home() {
 
       {/* About pill */}
       <button className="learn-pill" onClick={() => setShowModal(true)}>
-        About CyberNet
+        About Cyboeta
       </button>
 
       {/* Main */}
@@ -89,7 +89,7 @@ export default function Home() {
 
         {/* Logo */}
         <div className="logo-wrap" style={{ width: 160, height: 160, position: 'relative', marginBottom: 32 }}>
-          <Image src="/logo.svg" alt="CyberNet Shield" fill style={{ objectFit: 'contain' }} priority />
+          <Image src="/logo.svg" alt="Cyboeta Shield" fill style={{ objectFit: 'contain' }} priority />
         </div>
 
         {/* Name */}
@@ -129,7 +129,7 @@ export default function Home() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         zIndex: 1,
       }}>
-        <span style={{ fontSize: 11, color: 'rgba(240,246,255,0.15)', letterSpacing: '0.03em' }}>© 2026 CyberNet</span>
+        <span style={{ fontSize: 11, color: 'rgba(240,246,255,0.15)', letterSpacing: '0.03em' }}>© 2026 Cyboeta</span>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Privacy', 'Terms', 'About'].map(l => (
             <a key={l} href="#" style={{ fontSize: 11, color: 'rgba(240,246,255,0.15)', textDecoration: 'none', letterSpacing: '0.03em' }}>{l}</a>
@@ -141,11 +141,11 @@ export default function Home() {
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 6, color: '#f0f6ff' }}>What is CyberNet?</div>
+            <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 700, marginBottom: 6, color: '#f0f6ff' }}>What is Cyboeta?</div>
             <div style={{ fontSize: 11, color: 'rgba(240,246,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 24 }}>Version 1.0</div>
             <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', marginBottom: 22 }} />
             <p style={{ fontSize: 14, color: 'rgba(240,246,255,0.45)', lineHeight: 1.8, marginBottom: 24, fontWeight: 300 }}>
-              CyberNet is a community built for people who take security seriously. A space where cybersecurity minds come together — to learn, share, and grow without noise or distraction.
+              Cyboeta is a community built for people who take security seriously. A space where cybersecurity minds come together — to learn, share, and grow without noise or distraction.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
               {[

@@ -1,4 +1,4 @@
-# CyberNet Roadmap
+# Cyboeta Roadmap
 
 > A living document tracking what is built, what is coming, and in what order.
 > Last updated: August 2026
@@ -28,7 +28,7 @@
 - [x] Auth page — login/register toggle
 - [x] Dashboard — V2 placeholder
 - [x] SVG logo — lightweight, transparent
-- [x] About CyberNet modal
+- [x] About Cyboeta modal
 - [x] Deployed on Vercel
 - [x] Connected to GitHub for auto-deployment
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'CyberNet — Where Secure Minds Meet',
+  title: 'Cyboeta — Where Secure Minds Meet',
   description: 'A community built for people who take security seriously.',
   icons: { icon: '/logo.png' },
 };

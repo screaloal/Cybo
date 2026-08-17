@@ -212,7 +212,7 @@ export default function AuthPage() {
       </div>
 
       <div style={{ marginTop: 24, fontSize: 11, color: 'rgba(240,246,255,0.12)', letterSpacing: '0.03em' }}>
-        © 2026 CyberNet
+        © 2026 Cyboeta
       </div>
     </div>
   );
