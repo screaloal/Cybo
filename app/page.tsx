@@ -88,8 +88,8 @@ export default function Home() {
       <div className="content-wrap">
 
         {/* Logo */}
-        <div className="logo-wrap" style={{ width: 160, height: 160, position: 'relative', marginBottom: 32 }}>
-          <Image src="/logo.svg" alt="Cyboeta Shield" fill style={{ objectFit: 'contain' }} priority />
+        <div className="logo-wrap" style={{ width: 280, height: 280, position: 'relative', marginBottom: 32 }}>
+          <Image src="/logo.webp" alt="Cyboeta Shield" fill style={{ objectFit: 'contain' }} priority />
         </div>
 
         {/* Name */}
