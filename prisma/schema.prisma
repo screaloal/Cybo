@@ -17,6 +17,7 @@ enum Status {
   ACTIVE
   SUSPENDED
   PENDING_VERIFICATION
+  BANNED
 }
 
 model User {
