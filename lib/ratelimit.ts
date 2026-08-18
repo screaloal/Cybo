@@ -1,21 +1,39 @@
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import { createClient } from 'redis';
 
-const redis = new Redis({
-  url: process.env.REDIS_URL!,
-  token: process.env.REDIS_TOKEN!,
-});
+let client: ReturnType<typeof createClient> | null = null;
 
-// 5 login attempts per 15 minutes per IP
-export const loginRatelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '15 m'),
-  prefix: 'cyboeta:login',
-});
+async function getRedis() {
+  if (!client) {
+    client = createClient({ url: process.env.REDIS_URL });
+    client.on('error', (err) => console.error('Redis error:', err));
+    await client.connect();
+  }
+  return client;
+}
 
-// 3 register attempts per hour per IP
-export const registerRatelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(3, '60 m'),
-  prefix: 'cyboeta:register',
-});
+export async function checkRateLimit(
+  key: string,
+  limit: number,
+  windowSeconds: number
+): Promise<{ success: boolean; remaining: number }> {
+  try {
+    const redis = await getRedis();
+    const current = await redis.incr(key);
+    if (current === 1) {
+      await redis.expire(key, windowSeconds);
+    }
+    const remaining = Math.max(0, limit - current);
+    return { success: current <= limit, remaining };
+  } catch (e) {
+    console.error('Rate limit error:', e);
+    return { success: true, remaining: 1 };
+  }
+}
+
+export async function loginLimit(ip: string) {
+  return checkRateLimit(`cyboeta:login:${ip}`, 5, 900);
+}
+
+export async function registerLimit(ip: string) {
+  return checkRateLimit(`cyboeta:register:${ip}`, 3, 3600);
+}

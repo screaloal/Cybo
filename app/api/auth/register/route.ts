@@ -2,24 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import { signToken } from '@/lib/auth';
-import { registerRatelimit } from '@/lib/ratelimit';
+import { registerLimit } from '@/lib/ratelimit';
 
 export async function POST(req: NextRequest) {
   try {
-    const ip = req.headers.get('x-forwarded-for') ?? 'anonymous';
-    const { success, limit, reset, remaining } = await registerRatelimit.limit(ip);
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'anonymous';
+    const { success } = await registerLimit(ip);
 
     if (!success) {
       return NextResponse.json(
         { error: 'Too many registration attempts. Please try again in 1 hour.' },
-        {
-          status: 429,
-          headers: {
-            'X-RateLimit-Limit': limit.toString(),
-            'X-RateLimit-Remaining': remaining.toString(),
-            'X-RateLimit-Reset': reset.toString(),
-          }
-        }
+        { status: 429 }
       );
     }
 
