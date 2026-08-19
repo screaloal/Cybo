@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-export default function VerifyPage() {
+function VerifyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');
@@ -67,7 +67,6 @@ export default function VerifyPage() {
         borderRadius: 20, padding: '44px 36px',
         textAlign: 'center',
       }}>
-        {/* Logo */}
         <div style={{ width: 60, height: 60, position: 'relative', margin: '0 auto 28px' }}>
           <Image src="/logo.webp" alt="Cyboeta" fill style={{ objectFit: 'contain' }} />
         </div>
@@ -85,10 +84,10 @@ export default function VerifyPage() {
 
         {status === 'success' && (
           <>
-            <div style={{ fontSize: 22, marginBottom: 12 }}>✓</div>
+            <div style={{ fontSize: 22, marginBottom: 12, color: 'rgba(96,165,250,0.8)' }}>✓</div>
             <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Verified</div>
             <div style={{ fontSize: 13, color: 'rgba(240,246,255,0.35)', lineHeight: 1.7 }}>
-              {message} Redirecting you to the dashboard...
+              {message} Redirecting to dashboard...
             </div>
           </>
         )}
@@ -114,5 +113,17 @@ export default function VerifyPage() {
         © 2026 Cyboeta
       </div>
     </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ background: '#000', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'rgba(240,246,255,0.2)', fontSize: 12, letterSpacing: '0.1em' }}>Loading...</div>
+      </div>
+    }>
+      <VerifyContent />
+    </Suspense>
   );
 }
