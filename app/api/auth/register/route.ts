@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 import { signToken } from '@/lib/auth';
 import { registerLimit } from '@/lib/ratelimit';
+import { sendVerificationEmail } from '@/lib/email';
+import crypto from 'crypto';
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,13 +32,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Email or username already taken' }, { status: 409 });
 
     const passwordHash = await bcrypt.hash(password, 12);
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
     const user = await prisma.user.create({
-      data: { email, username, passwordHash }
+      data: {
+        email,
+        username,
+        passwordHash,
+        verificationToken,
+        verificationExpiry,
+      }
     });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, username, verificationToken);
+    } catch (emailError) {
+      console.error('Email send failed:', emailError);
+    }
 
     const token = await signToken({ userId: user.id, email: user.email, role: user.role });
     const res = NextResponse.json({
-      message: 'Account created',
+      message: 'Account created. Please check your email to verify your account.',
       user: { id: user.id, email: user.email, username: user.username }
     }, { status: 201 });
     res.cookies.set('token', token, {

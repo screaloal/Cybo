@@ -34,6 +34,8 @@ model User {
   displayName         String?
   bio                 String?
   avatarUrl           String?
+  verificationToken   String?
+  verificationExpiry  DateTime?
 
   @@index([email, username])
 }
