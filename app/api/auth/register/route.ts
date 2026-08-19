@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { signToken } from '@/lib/auth';
 import { registerLimit } from '@/lib/ratelimit';
 import { sendVerificationEmail } from '@/lib/email';
+import { validatePassword } from '@/lib/password';
 import crypto from 'crypto';
 
 export async function POST(req: NextRequest) {
@@ -19,17 +20,25 @@ export async function POST(req: NextRequest) {
     }
 
     const { email, password, username } = await req.json();
-    if (!email || !password || !username)
-      return NextResponse.json({ error: 'All fields required' }, { status: 400 });
 
-    if (password.length < 6)
-      return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
+    if (!email || !password || !username)
+      return NextResponse.json({ error: 'All fields required.' }, { status: 400 });
+
+    const { valid, message } = validatePassword(password);
+    if (!valid)
+      return NextResponse.json({ error: message }, { status: 400 });
+
+    if (username.length < 3)
+      return NextResponse.json({ error: 'Username must be at least 3 characters.' }, { status: 400 });
+
+    if (!/^[a-zA-Z0-9_]+$/.test(username))
+      return NextResponse.json({ error: 'Username can only contain letters, numbers and underscores.' }, { status: 400 });
 
     const exists = await prisma.user.findFirst({
       where: { OR: [{ email }, { username }] }
     });
     if (exists)
-      return NextResponse.json({ error: 'Email or username already taken' }, { status: 409 });
+      return NextResponse.json({ error: 'Email or username already taken.' }, { status: 409 });
 
     const passwordHash = await bcrypt.hash(password, 12);
     const verificationToken = crypto.randomBytes(32).toString('hex');
@@ -45,7 +54,6 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // Send verification email
     try {
       await sendVerificationEmail(email, username, verificationToken);
     } catch (emailError) {
@@ -67,6 +75,6 @@ export async function POST(req: NextRequest) {
     return res;
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Server error.' }, { status: 500 });
   }
 }

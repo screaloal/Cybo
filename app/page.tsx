@@ -258,7 +258,7 @@ export default function Home() {
               <span className="input-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </span>
-              <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="input-field" autoComplete="off"
+              <input type={showPassword ? 'text' : 'password'} placeholder="Min 8 chars, uppercase, number, special" value={password} onChange={e => setPassword(e.target.value)} className="input-field" autoComplete="off"
                 onKeyDown={e => e.key === 'Enter' && handleAuth()}/>
               <button className="eye-btn" type="button" onClick={() => setShowPassword(!showPassword)}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -308,7 +308,7 @@ export default function Home() {
               <span className="input-icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               </span>
-              <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="input-field"/>
+              <input type={showPassword ? 'text' : 'password'} placeholder="Min 8 chars, uppercase, number, special" value={password} onChange={e => setPassword(e.target.value)} className="input-field"/>
               <button className="eye-btn" type="button" onClick={() => setShowPassword(!showPassword)}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   {showPassword
