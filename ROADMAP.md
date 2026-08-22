@@ -1,65 +1,244 @@
-# Cyboeta Roadmap
+# Cyboeta — Master Project Document
 
-> A living document tracking what is built, what is coming, and in what order.
-> Last updated: August 2026
+> Living document. Last updated: August 2026.
+> Built by Ayomipo using Termux on Android.
+
+---
+
+## What is Cyboeta?
+
+A premium cybersecurity community platform. Not just a website — a system.
+Where cybersecurity learners, professionals and experts connect, share, grow and eventually scale to a worldwide audience.
+
+Visual identity: Black is the environment. Blue is the system.
+Standard: Apple-level premium aesthetics. WhatsApp-level contrast and accessibility.
+
+---
+
+## Live URLs
+
+- Production: https://cybo-eta.vercel.app
+- GitHub: https://github.com/screaloal/Cyboeta
+
+---
+
+## Tech Stack
+
+- Framework: Next.js 16 (TypeScript)
+- ORM: Prisma v5
+- Database: PostgreSQL on Supabase
+- Cache / Rate limiting: Redis (Vercel Redis integration)
+- Email: Resend
+- Deployment: Vercel (auto-deploys on git push to main)
+- Analytics: Vercel Analytics
+- Dev environment: Termux on Android
+
+---
+
+## Critical Constraint
+
+Prisma schema engine binaries are incompatible with Android.
+All database migrations must go through Supabase SQL Editor directly.
+Never run prisma migrate on Termux — use prisma db push via Vercel build pipeline or raw SQL in Supabase.
+
+---
+
+## Architecture
+Future (when scaling):
+Golden rule: Frontend controls the experience. Backend controls the security.
+
+---
+
+## Database Schema
+
+### Enums
+
+Role: USER | VIP | SUPERUSER
+Status: ACTIVE | SUSPENDED | PENDING_VERIFICATION | BANNED
+
+### User Model
+
+- id (uuid)
+- email (unique)
+- username (unique)
+- passwordHash
+- role (default: USER)
+- status (default: PENDING_VERIFICATION)
+- createdAt
+- updatedAt
+- lastLoginAt
+- failedLoginAttempts (default: 0)
+- displayName
+- bio
+- avatarUrl
+- verificationToken
+- verificationExpiry
+
+Indexes: email, username
+
+---
+
+## Security Principles
+
+1. RLS enforces data access at database level (V2)
+2. Never trust frontend — validate everything server-side
+3. Never render raw user HTML — sanitize all input (XSS)
+4. Never expose secrets on frontend
+5. Rate limit all sensitive actions
+6. Paginate all queries — never SELECT all
+7. Strict file upload whitelist (images only, max 5MB)
+8. Full moderation audit trail
+9. Banned accounts can never login
+10. Suspended accounts auto-restore after duration
+11. Strong password policy: min 8 chars, uppercase, lowercase, number, special character
+12. Username: min 3 chars, letters/numbers/underscores only
+13. bcrypt 12 rounds for password hashing
+14. JWT in HttpOnly cookies — never localStorage
+15. Server-side authorization checks on every protected route
+
+---
+
+## Account Lifecycle
+
+---
+
+## Password Standard
+
+- Minimum 8 characters
+- At least 1 uppercase letter
+- At least 1 lowercase letter
+- At least 1 number
+- At least 1 special character (!@#$%^&* etc)
+
+---
+
+## Theme System (V2)
+
+- Default: follows user phone system preference (light or dark)
+- Can be manually switched inside the app
+- Both themes equally premium — Apple website standard
+- Contrast: WhatsApp level — visible even at extra dim brightness
+- Logo: transparent background — works on both themes automatically
+- Light mode: white background, dark text, blue accents
+- Dark mode: black background, white text, blue accents
+
+---
+
+## Content Rules
+
+- Ephemeral posts disappear after 12 hours
+- Permanent posts (research, writeups, services) stay forever
+- User-generated content always sanitized before render
+- File uploads: images only (JPEG/PNG/WebP), max 5MB
+- No executable file uploads ever (.exe .zip .apk .sh .ps1)
+
+---
+
+## Scalability — Tiered Approach
+
+### Level 1 — Now (critical)
+- Authentication and authorization
+- Rate limiting
+- XSS protection
+- Server-side role verification on all API routes
+- Database indexes
+- Efficient Prisma queries (no N+1)
+- Migrations via Supabase SQL Editor
+- Backups
+- Error handling and logging
+- Caching where useful
+- CSRF protection
+
+### Level 2 — Growing Cyboeta
+- Queues and background jobs
+- Webhooks (payments, notifications)
+- Advanced monitoring
+- Search optimization
+- Connection pooling improvements
+- Read replicas
+- WebSockets for real-time features
+
+### Level 3 — At scale only
+- Kubernetes
+- Sharding
+- Multi-region deployment
+- Message brokers (Kafka etc)
+- Distributed locks
+- Service discovery
+- Chaos engineering
+
+Rule: Never add technology before the problem exists.
+
+---
+
+## iOS / App Store Preparation
+
+- Keep API platform-independent (web, iOS, Android all hit same endpoints)
+- Moderation system required by Apple for UGC apps (report, block, queue)
+- No empty dashboard at submission — must feel alive
+- Provide Apple with test account credentials
+- iOS app needs native features: push notifications, Face ID, deep links, share sheet, offline caching
+- Apple evaluates the product, not the implementation method
 
 ---
 
 ## V1 — Foundation (COMPLETE)
 
-### Authentication
-- [x] JWT with HttpOnly cookies (jose)
-- [x] bcrypt password hashing (12 rounds)
-- [x] Register API
-- [x] Login API
-- [x] Logout API
-- [x] Route protection via middleware
-- [x] Brute force protection (failedLoginAttempts field)
-- [x] Suspended account check on login
+### Auth
+- JWT with HttpOnly cookies (jose)
+- bcrypt password hashing (12 rounds)
+- Register API with strong password validation
+- Login API with brute force protection
+- Logout API
+- Email verification via Resend
+- Route protection via middleware
+- Rate limiting: 5 login attempts per 15 min, 3 register per hour per IP
+- BANNED and SUSPENDED account checks on login
 
 ### Database
-- [x] PostgreSQL on Supabase
-- [x] User model with roles (USER, VIP, SUPERUSER)
-- [x] Account status (ACTIVE, SUSPENDED, PENDING_VERIFICATION)
-- [x] Prisma ORM v5
+- PostgreSQL on Supabase
+- Full User model with roles and status enums
+- Prisma v5 ORM
 
 ### UI
-- [x] Homepage — minimal premium dark design
-- [x] Auth page — login/register toggle
-- [x] Dashboard — V2 placeholder
-- [x] SVG logo — lightweight, transparent
-- [x] About Cyboeta modal
-- [x] Deployed on Vercel
-- [x] Connected to GitHub for auto-deployment
+- Single page auth — logo shrinks, forms animate in place
+- Cinematic dashboard intro animation
+- Sticky nav with logo, tagline, avatar initials, settings menu
+- Tabbed feed (Community, CTFs, Research)
+- Floating plus button
+- Empty state with tagline
+- Cyboeta CE monogram logo (transparent background WebP, ~18KB)
+
+### Infrastructure
+- Vercel Analytics
+- Open Graph and Twitter card meta tags
+- Redis rate limiting
 
 ---
 
-## V2 — Security and Community Core
+## V2 — Security and Community Core (IN PROGRESS)
 
-### 2.1 Security Hardening (FIRST PRIORITY)
-- [ ] Add BANNED status to User model
-- [ ] Full account lifecycle (PENDING → ACTIVE → SUSPENDED → BANNED)
-- [ ] Rate limiting on all sensitive API routes
+### 2.1 Fix First (Priority)
+- [ ] Fix email verification (Resend domain setup)
+- [ ] Fix confirm password show/hide toggle
+- [ ] Fix password hint spacing
+- [ ] Fix contrast — WhatsApp level on all elements
+- [ ] Theme system (light/dark, system default, in-app switch)
+
+### 2.2 Security Hardening
+- [ ] Server-side authorization checks on all API routes
 - [ ] CSRF protection
-- [ ] Input sanitization and XSS prevention
-- [ ] Open Graph meta tags
-- [ ] Real-time form validation
+- [ ] XSS protection (before posts go live)
 - [ ] Supabase RLS policies
+- [ ] N+1 query prevention
+- [ ] Connection pooling
 
-### 2.2 Email System
-- [ ] Email verification on register
-- [ ] Welcome email
-- [ ] Password reset via email
-- [ ] Suspension and ban notification email
-
-### 2.3 Database Schema Expansion
+### 2.3 Database Expansion
 - [ ] Profile table
-- [ ] Post table with two content types:
-  - Ephemeral posts — disappear after 12 hours
-  - Permanent posts — research, writeups, services
+- [ ] Post table (ephemeral 12hr + permanent types)
 - [ ] Comment table
 - [ ] Reaction table
-- [ ] Community and category table
+- [ ] Community/category table
 - [ ] Membership table
 - [ ] Notification table
 - [ ] Message table
@@ -68,191 +247,93 @@
 - [ ] Indexes on all frequently queried fields
 
 ### 2.4 User Profiles
-- [ ] Profile page at /profile/username
-- [ ] Avatar upload (JPEG/PNG/WebP, max 5MB)
+- [ ] Profile page /profile/username
+- [ ] Avatar upload (max 5MB, images only)
 - [ ] Bio and display name
-- [ ] Role badge (USER, VIP, SUPERUSER)
+- [ ] Role badge
 - [ ] Reputation score
 - [ ] Member since date
-- [ ] Post history
 
 ### 2.5 Dashboard (Alive)
-- [ ] Welcome banner with username
-- [ ] Live activity feed
-- [ ] Recent discussions
-- [ ] Trending topics
-- [ ] Quick navigation to Community, Learn, CTFs, Research, Services, Profile, Settings
-- [ ] Notifications panel
-- [ ] Online members count
-
-### 2.6 Community Discussion System
-- [ ] Create ephemeral post (disappears after 12 hours)
-- [ ] Create permanent post
-- [ ] Comments on posts
-- [ ] Reactions
-- [ ] Pagination (20 posts per load)
+- [ ] Real posts from database
+- [ ] Pagination (20 per load)
 - [ ] Infinite scroll
-- [ ] Post categories and tags
-- [ ] Search posts
+- [ ] Notifications panel
+- [ ] Online members count (SUPERUSER view)
+
+### 2.6 Community Features
+- [ ] Create ephemeral post (12 hour timer)
+- [ ] Create permanent post
+- [ ] Comments
+- [ ] Reactions
+- [ ] Search
 - [ ] Report post
 
 ### 2.7 Moderation System
 - [ ] Report button on all content
-- [ ] Moderation queue (admin only)
-- [ ] Actions: Remove, Warn, Suspend (with duration), Ban (permanent)
-- [ ] Audit log of all moderator actions
+- [ ] Moderation queue (SUPERUSER only)
+- [ ] Actions: Remove, Warn, Suspend, Ban
+- [ ] Audit log
 - [ ] Ban appeal system
-- [ ] Banned and suspended users see clear explanation message
+- [ ] Clear messages to banned/suspended users
 
 ### 2.8 State Management
 - [ ] Zustand for global user state
-- [ ] Persist user session across pages
+- [ ] Persist session across pages
 - [ ] User context (id, username, role, status)
-
-### 2.9 Performance
-- [ ] Self-hosted fonts
-- [ ] Lazy loaded images
-- [ ] Code splitting
-- [ ] WebP/AVIF image format enforcement
-- [ ] Always paginate — never fetch entire tables
 
 ---
 
 ## V3 — Cyber Features
 
-### 3.1 CTF System
 - [ ] CTF challenge listings
-- [ ] Flag submission system
-- [ ] Scoreboard and leaderboard
+- [ ] Flag submission and scoreboard
 - [ ] Team support
 - [ ] Achievement badges
-- [ ] CTF categories (web, crypto, forensics, etc.)
-- [ ] Writeup submissions
-
-### 3.2 Learning Hub
-- [ ] Beginner to advanced resources
-- [ ] Security concepts library
-- [ ] External resource links
-- [ ] Progress tracking
-
-### 3.3 Research Hub
-- [ ] Research article submissions
-- [ ] Vulnerability discussions
-- [ ] Member publications
-- [ ] Peer review system
-
-### 3.4 Reputation System
-- [ ] Points for contributions
-- [ ] Badges: Contributor, Researcher, CTF Player, Mentor, Verified Professional
-- [ ] Clean credibility signals — no gamification gimmicks
-
-### 3.5 OAuth and 2FA
-- [ ] Google login
-- [ ] GitHub login
-- [ ] Two-Factor Authentication
-
-### 3.6 File Uploads (Strict)
-- [ ] Profile pictures (JPEG/PNG/WebP, max 5MB)
-- [ ] Post images (JPEG/PNG/WebP, max 5MB)
-- [ ] No executable files ever
-- [ ] Virus scan pipeline (future)
+- [ ] Learning hub (beginner to advanced)
+- [ ] Research hub (articles, vulnerability discussions)
+- [ ] Reputation system (Contributor, Researcher, CTF Player, Mentor, Verified Professional)
+- [ ] OAuth (Google, GitHub)
+- [ ] 2FA
 
 ---
 
 ## V4 — Network and Services
 
-### 4.1 Professional Profiles
-- [ ] Verified Professional badge
-- [ ] Skills and specializations
-- [ ] Portfolio and work history
-- [ ] Public profile for networking
-
-### 4.2 Services Marketplace
-- [ ] List cybersecurity services
-- [ ] Browse and contact professionals
-- [ ] Categories: Penetration testing, Consultations, Bug bounty, Malware analysis, Code review
-
-### 4.3 Messaging
-- [ ] Direct messages between members
-- [ ] Real-time via Supabase Realtime
-- [ ] Message encryption
-- [ ] Report and block users
-
-### 4.4 Organizations
-- [ ] Company and team profiles
-- [ ] Member organization affiliation
-- [ ] Organization verified badge
+- [ ] Professional profiles with verification
+- [ ] Services marketplace (pentest, consultations, bug bounty, malware analysis)
+- [ ] Direct messaging with encryption
+- [ ] Organizations and team profiles
 
 ---
 
 ## V5 — Monetization
 
-### 5.1 VIP Membership
 - [ ] Stripe payment integration
-- [ ] VIP benefits: Exclusive content, Private communities, Premium CTFs, Expert sessions, Early access to research
+- [ ] VIP membership with exclusive benefits
 - [ ] Free tier remains fully valuable
 - [ ] VIP = additional value, not a paywall
-
-### 5.2 SEO and Growth
-- [ ] Full Open Graph implementation
-- [ ] Schema markup (Organization, WebSite)
-- [ ] Sitemap
-- [ ] Meta descriptions per page
+- [ ] Custom accent color themes as VIP perk
+- [ ] Full SEO implementation
 
 ---
 
-## Architecture
+## Known Bugs (Fix Before V2 Features)
 
-CYBERNET
-Lightweight UI — Next.js and TypeScript
-Authentication — JWT and bcrypt
-Supabase API
-PostgreSQL with RLS — Storage for media
-Users, Posts, CTFs, Research, Messages, Services
-Realtime — Notifications and Live activity
-
-Golden rule: Frontend controls the experience. Backend controls the security.
-
----
-
-## Security Principles
-
-1. RLS enforces data access at database level
-2. Never trust frontend — validate everything server-side
-3. Never render raw user HTML — sanitize all input
-4. Never expose secrets on frontend
-5. Rate limit all sensitive actions
-6. Paginate all queries — never SELECT all
-7. Strict file upload whitelist
-8. Full moderation audit trail
-9. Banned accounts can never login
-10. Suspended accounts auto-restore after duration
-
----
-
-## Content Rules
-
-- Ephemeral posts disappear after 12 hours
-- Permanent posts — research, writeups, services — stay forever
-- User-generated content is always sanitized
-- File uploads are images only with strict size limits
-- No executable file uploads ever
-
----
-
-## Account Lifecycle
-
-Register → PENDING_VERIFICATION → ACTIVE → reported → SUSPENDED (temporary) or BANNED (permanent)
-Suspended accounts auto-restore after duration or manually by admin
-Banned accounts are permanent and can never login
-All moderation actions are logged in audit trail
+- Email verification broken (Resend free tier domain issue)
+- Confirm password field missing show/hide toggle
+- Password hint has no breathing room inside input
+- Contrast too low — secondary text invisible at low brightness
+- Next.js middleware deprecation warning (rename to proxy)
 
 ---
 
 ## Notes
 
-- Built by Ayomipo using Termux on Android
-- Prisma cannot run on Android — migrations via Supabase SQL Editor
-- Database: Supabase PostgreSQL free tier
-- Deployment: Vercel — auto-deploys on git push
-- All secrets stored in Vercel environment variables only
+- Name: Cyboeta (formerly CyberNet — changed because CyberNet was widely used)
+- CE monogram logo with crosshair/compass design
+- Visual language: Black is the environment. Blue is the system.
+- Tagline: Where Secure Minds Meet
+- Post types: Ephemeral (12hr) and Permanent
+- No gamification — clean credibility signals only
+- Dark only for V1/V2, theme system in V2
